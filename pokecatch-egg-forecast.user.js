@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         PokéCatch 孵蛋闪光预测（更新测试）
 // @namespace    local.pokecatch.egg-forecast.update-test
-// @version      1.1.6
+// @version      1.1.7
 // @description  手动读取本地存档，查看在孵蛋闪光状态及未来产蛋预测
 // @match        https://pokecatch-online.app/*
 // @run-at       document-idle
