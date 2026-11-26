@@ -1,14 +1,14 @@
 // ==UserScript==
-// @name         PokéCatch 孵蛋闪光预测
-// @namespace    local.pokecatch.egg-forecast
+// @name         PokéCatch 孵蛋闪光预测（更新测试）
+// @namespace    local.pokecatch.egg-forecast.update-test
 // @version      1.1.6
 // @description  手动读取本地存档，查看在孵蛋闪光状态及未来产蛋预测
 // @match        https://pokecatch-online.app/*
 // @run-at       document-idle
 // @grant        none
 // @noframes
-// @updateURL    https://raw.githubusercontent.com/q727912610-afk/pokecatch-egg-forecast/refs/heads/main/pokecatch-egg-forecast.user.js
-// @downloadURL  https://raw.githubusercontent.com/q727912610-afk/pokecatch-egg-forecast/refs/heads/main/pokecatch-egg-forecast.user.js
+// @updateURL    https://raw.githubusercontent.com/q727912610-afk/pokecatch-egg-forecast/refs/heads/egg-forecast-update-test/pokecatch-egg-forecast.user.js
+// @downloadURL    https://raw.githubusercontent.com/q727912610-afk/pokecatch-egg-forecast/refs/heads/egg-forecast-update-test/pokecatch-egg-forecast.user.js
 // ==/UserScript==
 
 (() => {
