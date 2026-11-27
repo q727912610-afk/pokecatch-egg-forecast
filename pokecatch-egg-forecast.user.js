@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         PokéCatch 孵蛋闪光预测
 // @namespace    local.pokecatch.egg-forecast
-// @version      1.1.9
+// @version      1.1.10
 // @description  手动读取本地存档，查看在孵蛋闪光状态及未来产蛋预测
 // @match        https://pokecatch-online.app/*
 // @run-at       document-idle
@@ -18,7 +18,7 @@
     const VERIFIED_BUILDS = new Map([
         ['f1ef0dd44e', 1], ['afec80c6e0', 1],
         ['f3a9382a50', 4], ['e2eb68ec8c', 4], ['f467030697', 4],
-        ['0696234a19', 4],
+        ['0696234a19', 4], ['f87e394696', 4],
     ]);
     const APP_BUNDLE = /^https:\/\/pokecatch-online\.pages\.dev\/bundle\/app\.([a-f0-9]{10})\.js(?:[?#].*)?$/;
     const DITTO = 132;
