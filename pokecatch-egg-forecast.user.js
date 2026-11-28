@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         PokéCatch 孵蛋闪光预测
 // @namespace    local.pokecatch.egg-forecast
-// @version      1.2.6
+// @version      1.2.7
 // @description  孵蛋预测、游走重开与地下通道收获预览
 // @match        https://pokecatch-online.app/*
 // @run-at       document-idle
@@ -19,7 +19,7 @@
         ['f1ef0dd44e', 1], ['afec80c6e0', 1],
         ['f3a9382a50', 4], ['e2eb68ec8c', 4], ['f467030697', 4],
         ['0696234a19', 4], ['f87e394696', 4],
-        ['ed6f25e306', 4], ['b2ce9ed48e', 4], ['8e590d99d0', 4], ['6e904dfeb4', 4], ['a736e7726c', 4], ['79f563cd7e', 4], ['9a62123d5e', 4],
+        ['ed6f25e306', 4], ['b2ce9ed48e', 4], ['8e590d99d0', 4], ['6e904dfeb4', 4], ['a736e7726c', 4], ['79f563cd7e', 4], ['9a62123d5e', 4], ['232b9ccbdc', 4],
     ]);
     const APP_BUNDLE = /^https:\/\/pokecatch-online\.pages\.dev\/bundle\/app\.([a-f0-9]{10})\.js(?:[?#].*)?$/;
     const DITTO = 132;
@@ -691,7 +691,7 @@
                 field(group, '当前进度　', currentLabel + reaching);
                 field(group, '预计最终楼层　', String(floors));
                 field(group, '预计结束　', new Date(end).toLocaleString());
-                field(group, recalled != null ? '召回时的掉落　' : '现在召回的掉落　', summarizeUndergroundLoot(loot, completed));
+                field(group, recalled != null ? '召回时的原始掉落　' : '现在召回的原始掉落　', summarizeUndergroundLoot(loot, completed));
                 field(group, '跑完整趟的原始掉落　', summarizeUndergroundLoot(loot, floors));
 
                 if (floors > from) {
@@ -724,7 +724,7 @@
             try {
                 const {build, problem} = gameBuild();
                 if (!build) throw new Error(problem);
-                if (!['ed6f25e306', 'b2ce9ed48e', '8e590d99d0', '6e904dfeb4'].includes(build)) {
+                if (!['ed6f25e306', 'b2ce9ed48e', '8e590d99d0', '6e904dfeb4', '232b9ccbdc'].includes(build)) {
                     throw new Error('此游戏构建的地下通道存档尚未核对。');
                 }
                 const raw = localStorage.getItem(SAVE_KEY);
