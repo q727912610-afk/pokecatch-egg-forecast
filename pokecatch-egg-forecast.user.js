@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         PokéCatch 孵蛋闪光预测
 // @namespace    local.pokecatch.egg-forecast
-// @version      1.2.3
+// @version      1.2.4
 // @description  孵蛋预测、游走重开与地下通道收获预览
 // @match        https://pokecatch-online.app/*
 // @run-at       document-idle
@@ -19,7 +19,7 @@
         ['f1ef0dd44e', 1], ['afec80c6e0', 1],
         ['f3a9382a50', 4], ['e2eb68ec8c', 4], ['f467030697', 4],
         ['0696234a19', 4], ['f87e394696', 4],
-        ['ed6f25e306', 4], ['b2ce9ed48e', 4], ['8e590d99d0', 4], ['6e904dfeb4', 4],
+        ['ed6f25e306', 4], ['b2ce9ed48e', 4], ['8e590d99d0', 4], ['6e904dfeb4', 4], ['a736e7726c', 4],
     ]);
     const APP_BUNDLE = /^https:\/\/pokecatch-online\.pages\.dev\/bundle\/app\.([a-f0-9]{10})\.js(?:[?#].*)?$/;
     const DITTO = 132;
