@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         PokéCatch 孵蛋闪光预测
 // @namespace    local.pokecatch.egg-forecast
-// @version      1.2.0
+// @version      1.2.1
 // @description  孵蛋预测、游走重开与地下通道收获预览
 // @match        https://pokecatch-online.app/*
 // @run-at       document-idle
@@ -507,9 +507,118 @@
         }
     }
 
+    // Simplified Chinese labels from the game’s Underground tables and language pack.
+    const UNDERGROUND_ITEM_NAMES = new Map(Object.entries({
+        "rare-candy": "神奇糖果",
+        "exp-candy-s": "经验糖果S",
+        "exp-candy-m": "经验糖果M",
+        "exp-candy-xl": "经验糖果XL",
+        "exp-candy-big": "经验糖果特大",
+        "fire-stone": "火之石",
+        "water-stone": "水之石",
+        "thunder-stone": "雷之石",
+        "leaf-stone": "叶之石",
+        "moon-stone": "月之石",
+        "sun-stone": "日之石",
+        "shiny-stone": "光之石",
+        "dusk-stone": "暗之石",
+        "dawn-stone": "觉醒之石",
+        "ice-stone": "冰之石",
+        "kings-rock": "王者之证",
+        "metal-coat": "金属膜",
+        "dragon-scale": "龙之鳞片",
+        "prism-scale": "美丽鳞片",
+        "deep-sea-tooth": "深海之牙",
+        "deep-sea-scale": "深海鳞片",
+        "oval-stone": "浑圆之石",
+        "protector": "护具",
+        "electirizer": "电力增幅器",
+        "magmarizer": "熔岩增幅器",
+        "reaper-cloth": "灵界之布",
+        "razor-claw": "锐利之爪",
+        "razor-fang": "锐利之牙",
+        "razz-berry": "蔓莓果",
+        "pinap-berry": "凰梨果",
+        "lansat-berry": "兰萨果",
+        "golden-razz-berry": "金色蔓莓果",
+        "nanab-berry": "蕉香果",
+        "enigma-berry": "谜芝果",
+        "starf-berry": "星桃果",
+    }));
+
+    const UNDERGROUND_ITEM_DESCRIPTIONS = new Map(Object.entries({
+        "rare-candy": "让一只宝可梦提升1级。",
+        "exp-candy-s": "给一只宝可梦经验值。",
+        "exp-candy-m": "给一只宝可梦许多经验值。",
+        "exp-candy-xl": "给一只宝可梦大量经验值。",
+        "exp-candy-big": "给一只宝可梦堆积如山的经验值。",
+        "fire-stone": "用于让特定宝可梦进化。",
+        "water-stone": "用于让特定宝可梦进化。",
+        "thunder-stone": "用于让特定宝可梦进化。",
+        "leaf-stone": "用于让特定宝可梦进化。",
+        "moon-stone": "用于让特定宝可梦进化。",
+        "sun-stone": "用于让特定宝可梦进化。",
+        "shiny-stone": "用于让特定宝可梦进化。",
+        "dusk-stone": "用于让特定宝可梦进化。",
+        "dawn-stone": "用于让特定宝可梦进化。",
+        "ice-stone": "用于让特定宝可梦进化。",
+        "kings-rock": "用于让特定宝可梦进化。",
+        "metal-coat": "用于让特定宝可梦进化。",
+        "dragon-scale": "用于让特定宝可梦进化。",
+        "prism-scale": "用于让特定宝可梦进化。",
+        "deep-sea-tooth": "用于让特定宝可梦进化。",
+        "deep-sea-scale": "用于让特定宝可梦进化。",
+        "oval-stone": "用于让特定宝可梦进化。",
+        "protector": "用于让特定宝可梦进化。",
+        "electirizer": "用于让特定宝可梦进化。",
+        "magmarizer": "用于让特定宝可梦进化。",
+        "reaper-cloth": "用于让特定宝可梦进化。",
+        "razor-claw": "用于让特定宝可梦在夜间进化。",
+        "razor-fang": "用于让特定宝可梦在夜间进化。",
+        "razz-berry": "提高捕捉几率。",
+        "golden-razz-berry": "进一步提高捕捉几率。",
+        "pinap-berry": "提高经验收益。",
+        "lansat-berry": "提高金币收益。",
+        "nanab-berry": "提高稀有宝可梦的出现概率。",
+        "enigma-berry": "提高未登记宝可梦的出现概率。",
+        "starf-berry": "提高异色宝可梦的出现概率。",
+    }));
+
+    const UNDERGROUND_PLATE_NAMES = new Map(Object.entries({
+        "fire": "火球石板",
+        "water": "水滴石板",
+        "grass": "碧绿石板",
+        "electric": "雷电石板",
+        "ice": "冰柱石板",
+        "fighting": "拳头石板",
+        "poison": "剧毒石板",
+        "ground": "大地石板",
+        "flying": "蓝天石板",
+        "psychic": "神奇石板",
+        "bug": "玉虫石板",
+        "rock": "岩石石板",
+        "ghost": "妖怪石板",
+        "dragon": "龙之石板",
+        "dark": "恶颜石板",
+        "steel": "钢铁石板",
+    }));
+
+    const UNDERGROUND_FOSSIL_NAMES = new Map(Object.entries({
+        "138": "菊石兽",
+        "140": "化石盔",
+        "142": "化石翼龙",
+        "345": "触手百合",
+        "347": "太古羽虫",
+        "408": "头盖龙",
+        "410": "盾甲龙",
+        "564": "原盖海龟",
+        "566": "始祖小鸟",
+    }));
+
     function summarizeUndergroundLoot(floors, count) {
         const totals = new Map();
-        const geodeNames = ['普通晶洞', '稀有晶洞', '史诗晶洞', '传说晶洞'];
+        const descriptions = new Map();
+        const geodeNames = ["普通晶洞","少见晶洞","稀有晶洞","传说晶洞"];
         for (const rewards of floors.slice(0, count)) {
             if (!Array.isArray(rewards)) throw new Error('逐层掉落格式无法识别。');
             for (const reward of rewards) {
@@ -519,10 +628,19 @@
                 switch (k) {
                     case 'money': label = '金币'; amount = n; break;
                     case 'shards': label = '碎片'; amount = n; break;
-                    case 'item': label = '道具 · ' + id; break;
+                    case 'item':
+                        label = UNDERGROUND_ITEM_NAMES.get(id) ?? ('未收录道具 · ' + id);
+                        if (UNDERGROUND_ITEM_DESCRIPTIONS.has(id)) {
+                            descriptions.set(label, UNDERGROUND_ITEM_DESCRIPTIONS.get(id));
+                        }
+                        break;
                     case 'geode': label = geodeNames[t]; break;
-                    case 'plate': label = '石板 · ' + type + ' · 档位 ' + t; break;
-                    case 'fossil': label = '化石 · #' + id; break;
+                    case 'plate':
+                        label = (UNDERGROUND_PLATE_NAMES.get(type) ?? ('未收录石板 · ' + type)) + '（档位 ' + t + '）';
+                        break;
+                    case 'fossil':
+                        label = '化石 · ' + (UNDERGROUND_FOSSIL_NAMES.get(String(id)) ?? ('#' + id));
+                        break;
                 }
                 if (!label || !Number.isSafeInteger(amount) || amount < 0) {
                     throw new Error('掉落类型或数量无法识别。');
@@ -530,7 +648,10 @@
                 totals.set(label, (totals.get(label) ?? 0) + amount);
             }
         }
-        return [...totals].filter(([, amount]) => amount).map(([label, amount]) => label + ' × ' + amount).join('、') || '无';
+        return [...totals].filter(([, amount]) => amount).map(([label, amount]) => {
+            const description = descriptions.get(label);
+            return label + ' × ' + amount + (description ? '（' + description + '）' : '');
+        }).join('、') || '无';
     }
 
     function undergroundProgress(slot, now) {
